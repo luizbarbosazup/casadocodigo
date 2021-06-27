@@ -4,6 +4,7 @@ import br.com.zupedu.casadocodigo.controller.dto.AutorRequest;
 import br.com.zupedu.casadocodigo.controller.dto.AutorResponse;
 import br.com.zupedu.casadocodigo.model.Autor;
 import br.com.zupedu.casadocodigo.repository.AutorRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,13 @@ public class AutorController {
     }
 
     @PostMapping
-    public AutorResponse salvaAutor(@RequestBody @Valid AutorRequest autorRequest){
+    public ResponseEntity<AutorResponse> salvaAutor(@RequestBody @Valid AutorRequest autorRequest){
+
+        Boolean existeEmail = repository.existsByEmail(autorRequest.getEmail());
+
+        if(existeEmail){
+            return ResponseEntity.badRequest().build();
+        }
 
         Autor autorSalvo = repository.save(autorRequest.toAutor());
 
@@ -34,7 +41,7 @@ public class AutorController {
                 "Salvo no banco de dados"
         );
 
-        return resposta;
+        return ResponseEntity.ok(resposta);
     }
 
 }
