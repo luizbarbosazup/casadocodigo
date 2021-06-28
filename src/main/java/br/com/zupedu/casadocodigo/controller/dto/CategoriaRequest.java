@@ -1,19 +1,26 @@
 package br.com.zupedu.casadocodigo.controller.dto;
 
 import br.com.zupedu.casadocodigo.model.Categoria;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotBlank;
 
 public class CategoriaRequest {
-    private String descricao;
 
-    public CategoriaRequest(String descricao) {
-        this.descricao = descricao;
+    @NotBlank
+    private String nome;
+
+    @JsonCreator
+    public CategoriaRequest(@JsonProperty("nome") String nome) {
+        this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
     public Categoria toCategoria(){
-        return new Categoria(descricao);
+        return new Categoria(nome);
     }
 }

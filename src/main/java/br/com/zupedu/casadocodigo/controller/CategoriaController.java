@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/api/v1/cadastros")
+@RequestMapping("/api/v1/categorias")
 public class CategoriaController {
 
     private CategoriaRepository repository;
@@ -20,10 +22,10 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public CategoriaResponse salvaCadastro(@RequestBody CategoriaRequest categoriaRequest){
+    public CategoriaResponse salvaCadastro(@RequestBody @Valid CategoriaRequest categoriaRequest){
 
         Categoria categoria = repository.save(categoriaRequest.toCategoria());
-        return new CategoriaResponse(categoria.getDescricao());
+        return new CategoriaResponse(categoria.getNome());
 
     }
 

@@ -1,28 +1,26 @@
 package br.com.zupedu.casadocodigo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Categoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descricao;
+    @Column(nullable = false, unique = true)
+    private String nome;
 
     public Categoria() {
     }
 
-    public Categoria(String descricao) {
-        this.descricao = descricao;
+    public Categoria(String nome) {
+        this.nome = nome;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 }
